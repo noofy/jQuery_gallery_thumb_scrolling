@@ -7,27 +7,55 @@
 #showbox { width:482px; height:560px; margin:0 auto; overflow:hidden;}
 #bigimg { width:440px; height:440px; margin:0 auto;}
 #bigimg img { width:440px; height:440px;}
-#prev,#next { margin:30px 2px; cursor:pointer; float:left;}
-#thumbimg { width:440px; height:120px; float:left; overflow:hidden;}
+#prev,#next { margin:30px 2px; cursor:pointer; float:left; position:relative;}
+/*#thumb { position:relative; width:440px; height:120px;}*/
+/*#thumbimg { width:440px; height:120px; float:left; overflow:hidden; position:absolute;}*/
+#thumbimg { width:900px; height:120px; float:left; overflow:hidden; position:absolute;}
 #thumbimg ul { padding:0; margin:0; list-style:none; display:block;}
 #thumbimg ul li { padding:0; margin:10px 5px; float:left; cursor:pointer;}
 #thumbimg ul li img { border:0; width:100px; height:100px;}
+#thumb { width:440px; height:120px; float:left; position:relative; overflow:hidden;}
 </style>
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
-$(function() {
-	var arr = $('#thumbimg ul');
-	$('#prev').click(function() {
-		if(parseFloat(arr.css('margin-left')) < 0) {
-			arr.animate({marginLeft:parseFloat(arr.css('margin-left')) + 440 + 'px'}, 500);
-		}
-	});
-	$('#next').click(function() {
-		if(Math.abs(parseFloat(arr.css('margin-left'))) < 440 * ($('li', arr).size() / 4 - 1)) {
-			arr.animate({marginLeft:parseFloat(arr.css('margin-left')) - 440 + 'px'}, 500);
-		}
-	});
-	
+$(document).ready(function() {
+	// var arr = $('#thumbimg ul');
+	// $('#prev').click(function() {
+	// 	if(parseFloat(arr.css('margin-left')) < 0) {
+	// 		arr.animate({marginLeft:parseFloat(arr.css('margin-left')) + 440 + 'px'}, 500);
+	// 	}
+	// });
+	// $('#next').click(function() {
+	// 	if(Math.abs(parseFloat(arr.css('margin-left'))) < 440 * ($('li', arr).size() / 4 - 1)) {
+	// 		arr.animate({marginLeft:parseFloat(arr.css('margin-left')) - 440 + 'px'}, 500);
+	// 	}
+	// });
+
+    var speed = 5000;
+    var piccnt = jQuery("#thumbimg ul img").length;
+
+    var thumbimg_width = (100 + 10) * piccnt;
+    // alert(thumbimg_width);
+    jQuery("#thumbimg").css("width", thumbimg_width);
+    var next_left = (thumbimg_width - jQuery("#thumb").width()) * (-1);
+    // alert(next_left);
+    
+    jQuery("#prev").mouseover(function() {
+        jQuery("#thumbimg").animate({left:0}, speed);
+    })
+
+    jQuery("#prev").mouseleave(function() {
+        jQuery("#thumbimg").stop(true);
+    })
+
+    jQuery("#next").mouseover(function() {
+        jQuery("#thumbimg").animate({left:next_left}, speed);
+    })
+
+    jQuery("#next").mouseleave(function() {
+        jQuery("#thumbimg").stop(true);
+    })
+
 	$('#bigimg img').attr('src', $('#thumbimg img:first').attr('src'));
 	$('#thumbimg img').mouseover(function() {
 		$('#bigimg img').attr('src', $(this).attr('src'));
@@ -38,25 +66,28 @@ $(function() {
 
 <body>
 <div id="showbox">
-	<div id="bigimg">
-    	<img>
+    <div id="bigimg">
+        <img src="#" />
     </div>
-    <img src="images/prev.png" width="17" height="53" id="prev">
-    <div id="thumbimg">
-    	<ul>
-        	<li><img src="images/img01.jpg"></li>
-            <li><img src="images/img02.jpg"></li>
-            <li><img src="images/img03.jpg"></li>
-            <li><img src="images/img04.jpg"></li>
-            <li><img src="images/img05.jpg"></li>
-            <li><img src="images/img06.jpg"></li>
-            <li><img src="images/img07.jpg"></li>
-            <li><img src="images/img08.jpg"></li>
-            <li><img src="images/img09.jpg"></li>
-            <li><img src="images/img10.jpg"></li>
-        </ul>
+    <div><img src="images/prev.png" width="17" height="53" id="prev"></div>
+    <div id="thumb">
+        <div id="thumbimg">
+            <ul>
+                <li><img src="images/img01.jpg" /></li>
+                <li><img src="images/img02.jpg" /></li>
+                <li><img src="images/img03.jpg" /></li>
+                <li><img src="images/img04.jpg" /></li>
+                <li><img src="images/img05.jpg" /></li>
+                <li><img src="images/img06.jpg" /></li>
+                <li><img src="images/img07.jpg" /></li>
+                <li><img src="images/img08.jpg" /></li>
+                <li><img src="images/img09.jpg" /></li>
+                <li><img src="images/img10.jpg" /></li>
+            </ul>
+        </div>
     </div>
-    <img src="images/next.png" width="17" height="53" id="next">
+    <div><img src="images/next.png" width="17" height="53" id="next"></div>
 </div>
+
 </body>
 </html>
