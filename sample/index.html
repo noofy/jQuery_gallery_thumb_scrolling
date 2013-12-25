@@ -31,7 +31,7 @@ $(document).ready(function() {
 	// 	}
 	// });
 
-    var speed = 5000;
+    var speed = 6000;
     var piccnt = jQuery("#thumbimg ul img").length;
 
     var thumbimg_width = (100 + 10) * piccnt;
@@ -41,7 +41,9 @@ $(document).ready(function() {
     // alert(next_left);
     
     jQuery("#prev").mouseover(function() {
-        jQuery("#thumbimg").animate({left:0}, speed);
+        var nowleft = jQuery("#thumbimg").position().left;
+        var realspeed = Math.floor(speed * ((0 - nowleft)/thumbimg_width));
+        jQuery("#thumbimg").animate({left:0}, realspeed);
     })
 
     jQuery("#prev").mouseleave(function() {
@@ -49,7 +51,9 @@ $(document).ready(function() {
     })
 
     jQuery("#next").mouseover(function() {
-        jQuery("#thumbimg").animate({left:next_left}, speed);
+        var nowleft = jQuery("#thumbimg").position().left;
+        var realspeed = Math.floor(speed * ((nowleft-next_left)/thumbimg_width));
+        jQuery("#thumbimg").animate({left:next_left}, realspeed);
     })
 
     jQuery("#next").mouseleave(function() {
